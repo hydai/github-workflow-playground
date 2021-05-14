@@ -42,7 +42,6 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: my-output.txt
-        path: ./output-from-previous.txt
 
     - uses: actions/download-artifact@v2
       with:
@@ -50,7 +49,7 @@ jobs:
         path: ./output-folder-from-previous
 
     - name: Display content of downloaded files
-      run: cat ./output-from-previous.txt
+      run: cat ./my-output.txt
 
     - name: Display structure of downloaded files
       run: ls -R
@@ -89,7 +88,6 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: my-output.txt
-        path: ./output-from-previous.txt
 
     - uses: actions/download-artifact@v2
       with:
@@ -97,7 +95,7 @@ jobs:
         path: ./output-folder-from-previous
 
     - name: Display content of downloaded files
-      run: cat ./output-from-previous.txt
+      run: cat ./my-output.txt
 
     - name: Display structure of downloaded files
       run: ls -R
@@ -113,12 +111,12 @@ jobs:
       with:
         fetch-depth: 0
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v1
       with:
         name: my-output.txt
         path: ./output.txt
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v1
       with:
         name: output-folder
         path: ./
@@ -131,18 +129,17 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v1
       with:
         name: my-output.txt
-        path: ./output-from-previous.txt
 
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v1
       with:
         name: output-folder
         path: ./output-folder-from-previous
 
     - name: Display content of downloaded files
-      run: cat ./output-from-previous.txt
+      run: cat ./my-output.txt
 
     - name: Display structure of downloaded files
       run: ls -R
@@ -158,12 +155,12 @@ jobs:
       with:
         fetch-depth: 0
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v1
       with:
         name: my-output.txt
         path: ./output.txt
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v1
       with:
         name: output-folder
         path: ./
@@ -176,18 +173,17 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v1
       with:
         name: my-output.txt
-        path: ./output-from-previous.txt
 
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v1
       with:
         name: output-folder
         path: ./output-folder-from-previous
 
     - name: Display content of downloaded files
-      run: cat ./output-from-previous.txt
+      run: cat ./my-output.txt
 
     - name: Display structure of downloaded files
       run: ls -R
