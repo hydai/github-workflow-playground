@@ -1,0 +1,132 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build_and_upload_ubuntu_latest:
+    runs-on: ubuntu-latest
+    container:
+      image: wasmedge/wasmedge:ubuntu-build-gcc
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-output.txt
+        path: ./output.txt
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: output-folder
+        path: ./
+
+
+  download_artifact_ubuntu_latest:
+    runs-on: ubuntu-latest
+    needs: build_and_upload_ubuntu_latest
+    container:
+      image: wasmedge/wasmedge:ubuntu-build-gcc
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: my-output.txt
+        path: ./output-from-previous.txt
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: output-folder
+        path: ./output-folder-from-previous
+
+    - name: Display content of downloaded files
+      run: cat ./output-from-previous.txt
+
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: ./output-folder-from-previous
+
+  download_artifact_manylinux2014_x86_64:
+    runs-on: ubuntu-latest
+    container:
+      image: wasmedge/wasmedge:manylinux2014_x86_64
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: my-output.txt
+        path: ./output-from-previous.txt
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: output-folder
+        path: ./output-folder-from-previous
+
+    - name: Display content of downloaded files
+      run: cat ./output-from-previous.txt
+
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: ./output-folder-from-previous
+
+
+  download_artifact_manylinux2010_x86_64:
+    runs-on: ubuntu-latest
+    container:
+      image: wasmedge/wasmedge:manylinux2010_x86_64
+    steps:
+    - uses: actions/checkout@v1
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: my-output.txt
+        path: ./output-from-previous.txt
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: output-folder
+        path: ./output-folder-from-previous
+
+    - name: Display content of downloaded files
+      run: cat ./output-from-previous.txt
+
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: ./output-folder-from-previous
+
+  download_artifact_manylinux1_x86_64:
+    runs-on: ubuntu-latest
+    container:
+      image: wasmedge/wasmedge:manylinux1_x86_64
+    steps:
+    - uses: actions/checkout@v1
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: my-output.txt
+        path: ./output-from-previous.txt
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: output-folder
+        path: ./output-folder-from-previous
+
+    - name: Display content of downloaded files
+      run: cat ./output-from-previous.txt
+
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: ./output-folder-from-previous
