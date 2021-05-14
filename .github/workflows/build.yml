@@ -48,9 +48,6 @@ jobs:
         name: output-folder
         path: ./output-folder-from-previous
 
-    - name: Display content of downloaded files
-      run: cat ./my-output.txt
-
     - name: Display structure of downloaded files
       run: ls -R
       working-directory: ./output-folder-from-previous
@@ -94,9 +91,6 @@ jobs:
         name: output-folder
         path: ./output-folder-from-previous
 
-    - name: Display content of downloaded files
-      run: cat ./my-output.txt
-
     - name: Display structure of downloaded files
       run: ls -R
       working-directory: ./output-folder-from-previous
@@ -138,9 +132,6 @@ jobs:
         name: output-folder
         path: ./output-folder-from-previous
 
-    - name: Display content of downloaded files
-      run: cat ./my-output.txt
-
     - name: Display structure of downloaded files
       run: ls -R
       working-directory: ./output-folder-from-previous
@@ -181,9 +172,6 @@ jobs:
       with:
         name: output-folder
         path: ./output-folder-from-previous
-
-    - name: Display content of downloaded files
-      run: cat ./my-output.txt
 
     - name: Display structure of downloaded files
       run: ls -R
