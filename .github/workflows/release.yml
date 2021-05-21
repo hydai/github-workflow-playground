@@ -1,0 +1,50 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  create:
+    name: Create Release
+    runs-on: ubuntu-latest
+    container:
+      image: wasmedge/wasmedge:ubuntu-build-gcc
+    outputs:
+      version: ${{ steps.prep.outputs.version }}
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Get version
+        id: prep
+        run: |
+          echo ::set-output name=version::$(git describe --tag)
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Project ${{ steps.prep.outputs.version }}
+          body_path: .CurrentChangelog.md
+          draft: true
+          prerelease: false
+  build_and_upload_amd64_package:
+    needs: create
+    runs-on: ubuntu-latest
+    container:
+      image: wasmedge/wasmedge:ubuntu-build-gcc
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Upload files
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create.outputs.upload_url }}
+          asset_path: ./output.txt
+          asset_name: Project-${{ needs.create.outputs.version }}.txt
