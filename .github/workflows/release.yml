@@ -46,39 +46,31 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: ubuntu-latest.tar.gz
-        path: ./output.txt
+        name: build-latest
+        path: ./build/ubuntu-latest.tar.gz
 
-    - uses: actions/upload-artifact@v2
-      with:
-        name: ubuntu-latest
-        path: ./
   download_artifact_ubuntu_latest:
     runs-on: ubuntu-latest
-    needs: build_ubuntu_latest
+    needs: [create, build_ubuntu_latest]
     container:
       image: wasmedge/wasmedge:ubuntu-build-gcc
 
     steps:
     - uses: actions/download-artifact@v2
       with:
-        name: ubuntu-latest.tar.gz
-
-    - uses: actions/download-artifact@v2
-      with:
-        name: ubuntu-latest
-        path: ./ubuntu-latest
+        name: build-latest
 
     - name: Display structure of downloaded files
       run: ls -R
       working-directory: ./ubuntu-latest
+
     - name: Upload files
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ needs.create.outputs.upload_url }}
-        asset_path: ./ubuntu-latest.tar.gz
+        asset_path: ./build-latest/ubuntu-latest.tar.gz
         asset_name: Project-${{ needs.create.outputs.version }}.ubuntu-latest.tar.gz
 
   build_manylinux2014:
@@ -94,33 +86,19 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: ubuntu-manylinux2014.tar.gz
-        path: ./output.txt
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: ubuntu-manylinux2014
-        path: ./
+        name: build-manylinux2014
+        path: ./build/ubuntu-manylinux2014.tar.gz
 
   download_artifact_manylinux2014_x86_64:
     runs-on: ubuntu-latest
-    needs: build_manylinux2014
+    needs: [create, build_manylinux2014]
     steps:
     - uses: actions/download-artifact@v2
       with:
-        name: ubuntu-manylinux2014.tar.gz
-
-    - uses: actions/download-artifact@v2
-      with:
-        name: ubuntu-manylinux2014
-        path: ./ubuntu-manylinux2014
+        name: build-manylinux2014
 
     - name: Display structure of downloaded file
-      run: ls -alhR ./ubuntu-manylinux2014.tar.gz
-
-    - name: Display structure of downloaded files
-      run: ls -R
-      working-directory: ./ubuntu-manylinux2014
+      run: ls -alhR ./build-manylinux2014
 
     - name: Upload files
       uses: actions/upload-release-asset@v1
@@ -128,12 +106,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ needs.create.outputs.upload_url }}
-        asset_path: ./ubuntu-manylinux2014.tar.gz
+        asset_path: ./build-manylinux2014/ubuntu-manylinux2014.tar.gz
         asset_name: Project-${{ needs.create.outputs.version }}.ubuntu-manylinux2014.tar.gz
 
   build_manylinux2010:
-    needs: create
     runs-on: ubuntu-latest
+    needs: create
     container:
       image: wasmedge/wasmedge:manylinux2010_x86_64
 
@@ -144,35 +122,21 @@ jobs:
 
     - uses: actions/upload-artifact@v1
       with:
-        name: ubuntu-manylinux2010.tar.gz
-        path: ./output.txt
-
-    - uses: actions/upload-artifact@v1
-      with:
-        name: ubuntu-manylinux2010
-        path: ./
+        name: build-manylinux2010
+        path: ./build/ubuntu-manylinux2010.tar.gz
 
   download_artifact_manylinux2010_x86_64:
     runs-on: ubuntu-latest
-    needs: build_manylinux2010
+    needs: [create, build_manylinux2010]
     steps:
     - uses: actions/checkout@v1
 
     - uses: actions/download-artifact@v1
       with:
-        name: ubuntu-manylinux2010.tar.gz
-
-    - uses: actions/download-artifact@v1
-      with:
-        name: ubuntu-manylinux2010
-        path: ./ubuntu-manylinux2010
+        name: build-manylinux2010
 
     - name: Display structure of downloaded file
-      run: ls -alhR ./ubuntu-manylinux2010.tar.gz
-
-    - name: Display structure of downloaded files
-      run: ls -R
-      working-directory: ./ubuntu-manylinux2010
+      run: ls -alhR ./build-manylinux2010
 
     - name: Upload files
       uses: actions/upload-release-asset@v1
@@ -180,7 +144,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ needs.create.outputs.upload_url }}
-        asset_path: ./ubuntu-manylinux2010.tar.gz
+        asset_path: ./build-manylinux2010/ubuntu-manylinux2010.tar.gz
         asset_name: Project-${{ needs.create.outputs.version }}.ubuntu-manylinux2010.tar.gz
 
   build_manylinux1:
@@ -196,33 +160,19 @@ jobs:
 
     - uses: actions/upload-artifact@v1
       with:
-        name: ubuntu-manylinux1.tar.gz
-        path: ./output.txt
-
-    - uses: actions/upload-artifact@v1
-      with:
-        name: ubuntu-manylinux1
-        path: ./
+        name: build-manylinux1
+        path: ./build/ubuntu-manylinux1.tar.gz
 
   download_artifact_manylinux1_x86_64:
     runs-on: ubuntu-latest
-    needs: build_manylinux1
+    needs: [create, build_manylinux1]
     steps:
     - uses: actions/download-artifact@v1
       with:
-        name: ubuntu-manylinux1.tar.gz
-
-    - uses: actions/download-artifact@v1
-      with:
-        name: ubuntu-manylinux1
-        path: ./ubuntu-manylinux1
+        name: build-manylinux1
 
     - name: Display structure of downloaded file
-      run: ls -alhR ./ubuntu-manylinux1.tar.gz
-
-    - name: Display structure of downloaded files
-      run: ls -R
-      working-directory: ./ubuntu-manylinux1
+      run: ls -alhR ./build-manylinux1
 
     - name: Upload files
       uses: actions/upload-release-asset@v1
@@ -230,5 +180,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ needs.create.outputs.upload_url }}
-        asset_path: ./ubuntu-manylinux1.tar.gz
+        asset_path: ./build-manylinux1/ubuntu-manylinux1.tar.gz
         asset_name: Project-${{ needs.create.outputs.version }}.ubuntu-manylinux1.tar.gz
