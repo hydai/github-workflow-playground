@@ -61,8 +61,7 @@ jobs:
         name: build-latest
 
     - name: Display structure of downloaded files
-      run: ls -R
-      working-directory: ./ubuntu-latest
+      run: ls -alhR ./build-latest
 
     - name: Upload files
       uses: actions/upload-release-asset@v1
