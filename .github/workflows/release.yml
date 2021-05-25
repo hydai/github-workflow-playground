@@ -72,6 +72,7 @@ jobs:
         upload_url: ${{ needs.create.outputs.upload_url }}
         asset_path: ./build-latest/ubuntu-latest.tar.gz
         asset_name: Project-${{ needs.create.outputs.version }}.ubuntu-latest.tar.gz
+        asset_content_type: application/x-gzip
 
   build_manylinux2014:
     needs: create
@@ -108,6 +109,7 @@ jobs:
         upload_url: ${{ needs.create.outputs.upload_url }}
         asset_path: ./build-manylinux2014/ubuntu-manylinux2014.tar.gz
         asset_name: Project-${{ needs.create.outputs.version }}.ubuntu-manylinux2014.tar.gz
+        asset_content_type: application/x-gzip
 
   build_manylinux2010:
     runs-on: ubuntu-latest
@@ -146,6 +148,7 @@ jobs:
         upload_url: ${{ needs.create.outputs.upload_url }}
         asset_path: ./build-manylinux2010/ubuntu-manylinux2010.tar.gz
         asset_name: Project-${{ needs.create.outputs.version }}.ubuntu-manylinux2010.tar.gz
+        asset_content_type: application/x-gzip
 
   build_manylinux1:
     needs: create
@@ -182,3 +185,4 @@ jobs:
         upload_url: ${{ needs.create.outputs.upload_url }}
         asset_path: ./build-manylinux1/ubuntu-manylinux1.tar.gz
         asset_name: Project-${{ needs.create.outputs.version }}.ubuntu-manylinux1.tar.gz
+        asset_content_type: application/x-gzip
