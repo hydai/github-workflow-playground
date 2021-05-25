@@ -44,7 +44,7 @@ jobs:
       with:
         fetch-depth: 0
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v1
       with:
         name: build-latest
         path: ./build/ubuntu-latest.tar.gz
@@ -56,7 +56,7 @@ jobs:
       image: wasmedge/wasmedge:ubuntu-build-gcc
 
     steps:
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v1
       with:
         name: build-latest
 
@@ -85,7 +85,7 @@ jobs:
       with:
         fetch-depth: 0
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v1
       with:
         name: build-manylinux2014
         path: ./build/ubuntu-manylinux2014.tar.gz
@@ -94,7 +94,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [create, build_manylinux2014]
     steps:
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v1
       with:
         name: build-manylinux2014
 
